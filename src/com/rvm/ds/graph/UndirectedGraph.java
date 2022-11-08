@@ -30,7 +30,9 @@ public class UndirectedGraph {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("nodes : ").append(this.nodes).append("\n");
+        
+         sb.append("nodes : ").append(this.nodes).append("\n");
+        
         sb.append("edges : ").append(this.edges).append("\n");
 
         sb.append("\n");
@@ -45,7 +47,7 @@ public class UndirectedGraph {
         return sb.toString();
     }
 
-    
+
     public static void main(String[] args) {
         UndirectedGraph graph = new UndirectedGraph(4);
         graph.addEdge(0, 1);
