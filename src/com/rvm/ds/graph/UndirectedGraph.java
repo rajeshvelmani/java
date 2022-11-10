@@ -1,6 +1,8 @@
 package com.rvm.ds.graph;
 
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 /*
  * 
@@ -27,18 +29,84 @@ public class UndirectedGraph {
         this.edges++;
     }
 
+    public void bfs(int startNode) {
+        boolean visited[] = new boolean[this.nodes];
+        Queue<Integer> queue = new LinkedList<>();
+        StringBuilder sb = new StringBuilder();
+
+        queue.offer(startNode);
+        sb.append("==> BFS <== \n"); //no i18n
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            visited[node] = true;
+            sb.append("==> ").append(node);
+            for (int adjNode : this.adjMatrix[node]) {
+                if (!visited[adjNode]) {
+                    visited[adjNode] = true;
+                    queue.offer(adjNode);
+                }
+            }
+        }
+
+        System.out.println(sb.toString());
+    }
+
+    public void dfs(int startNode) {
+        boolean visited[] = new boolean[this.nodes];
+        Stack<Integer> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+
+        stack.push(startNode);
+        sb.append("==> DFS <== \n");  //no i18n
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+            if (!visited[node]) {
+                visited[node] = true;
+                sb.append("==> ").append(node);
+                for (int adjNode : this.adjMatrix[node]) {
+                    if (!visited[adjNode]) {
+                        stack.push(adjNode);
+                    }
+                }
+            }
+        }
+        
+        System.out.println(sb.toString());
+
+    }
+
+    public void dfsR(){
+        boolean[] visited = new boolean[this.nodes];
+        System.out.println("***** DFS Recursive *****");
+        for(int i =0 ; i < this.nodes; i++){
+            if(!visited[i]){
+                dfsR(i, visited);
+            }
+        }
+        System.out.println();
+    }
+
+    private void dfsR(int node, boolean[] visited){
+        visited[node] =true;
+        System.out.print(" -> " + node);
+
+        for(int adjNode : adjMatrix[node]){
+            if(!visited[adjNode]){
+                dfsR(adjNode, visited);
+            }
+        }
+    }
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        
-         sb.append("nodes : ").append(this.nodes).append("\n");
-        
+        sb.append("nodes : ").append(this.nodes).append("\n");
         sb.append("edges : ").append(this.edges).append("\n");
 
-        sb.append("\n");
-
         for (int i = 0; i < this.nodes; i++) {
-            sb.append(" ==> ");
+            sb.append(" ==> ").append(i).append(" :");
             for (int j : this.adjMatrix[i]) {
                 sb.append(j).append(" ");
             }
@@ -47,15 +115,29 @@ public class UndirectedGraph {
         return sb.toString();
     }
 
-
     public static void main(String[] args) {
-        UndirectedGraph graph = new UndirectedGraph(4);
-        graph.addEdge(0, 1);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
+        UndirectedGraph graph = new UndirectedGraph(6);
         graph.addEdge(3, 0);
+        graph.addEdge(0, 1);
 
-        System.out.print(graph.toString());
+
+        graph.addEdge(2, 3);
+        graph.addEdge(2, 4);
+
+        graph.addEdge(1, 2);
+
+
+        System.out.println(graph.toString());
+
+        // bfs
+        graph.bfs(0);
+
+        // dfs
+        graph.dfs(0);
+
+
+        // dfs recursive
+        graph.dfsR();
     }
 
 }
