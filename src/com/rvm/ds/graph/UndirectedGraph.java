@@ -78,22 +78,35 @@ public class UndirectedGraph {
 
     public void dfsR(){
         boolean[] visited = new boolean[this.nodes];
+        int[] compIdArr = new int[this.nodes];
+        int currentCompId = 0;
         System.out.println("***** DFS Recursive *****");
         for(int i =0 ; i < this.nodes; i++){
             if(!visited[i]){
-                dfsR(i, visited);
+                dfsR(i, visited, currentCompId, compIdArr);
+                currentCompId++;
             }
+        }
+        System.out.println();
+        System.out.println("*** Components ***");
+
+        for(int i =0 ; i < this.nodes; i++){
+            System.out.print(i);
+        }
+        System.out.println();
+        for(int i =0 ; i < this.nodes; i++){
+            System.out.print(compIdArr[i]);
         }
         System.out.println();
     }
 
-    private void dfsR(int node, boolean[] visited){
+    private void dfsR(int node, boolean[] visited, int currentCompId, int[] compIdArr){
         visited[node] =true;
         System.out.print(" -> " + node);
-
+        compIdArr[node] = currentCompId;
         for(int adjNode : adjMatrix[node]){
             if(!visited[adjNode]){
-                dfsR(adjNode, visited);
+                dfsR(adjNode, visited, currentCompId, compIdArr);
             }
         }
     }
@@ -117,6 +130,7 @@ public class UndirectedGraph {
 
     public static void main(String[] args) {
         UndirectedGraph graph = new UndirectedGraph(6);
+        /*
         graph.addEdge(3, 0);
         graph.addEdge(0, 1);
 
@@ -125,7 +139,12 @@ public class UndirectedGraph {
         graph.addEdge(2, 4);
 
         graph.addEdge(1, 2);
+        */
 
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 3);
+
+        graph.addEdge(2, 4);
 
         System.out.println(graph.toString());
 
