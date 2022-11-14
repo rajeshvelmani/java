@@ -1,4 +1,4 @@
-package com.rvm.ds;
+package com.rvm.ds.graph;
 
 public class NoOfIsland {
 
