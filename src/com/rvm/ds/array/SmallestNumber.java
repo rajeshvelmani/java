@@ -31,6 +31,7 @@ class SmallestNumber {
         System.out.println(smallestNumber.getSmallestNumber(1000));
         System.out.println(smallestNumber.getSmallestNumber(13));
         System.out.println(smallestNumber.getSmallestNumber(77));
+        System.out.println(smallestNumber.getSmallestNumber(100));
     }
 
 }
